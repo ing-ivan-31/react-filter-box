@@ -27,10 +27,10 @@ Condition
   		{
         	return {expressions:expr};
         }
-  / ThreeFactorCondition
+  / (IsNullCondition / NotNullCondition / ThreeFactorCondition)
 
 ThreeFactorCondition
-  = category:ValidName ws operator:Operator ws value:ValidValue
+  = category:ValidName ws operator:Operator ws value:ValidValue?
   			{
             	return {
                 	category : category,
@@ -38,13 +38,6 @@ ThreeFactorCondition
                     value: value
                 };
             }
-
-ConditionNull
-  = "(" _ expr:Expression _ ")"
-  		{
-        	return {expressions:expr};
-        }
-  / IsNullCondition
 
 IsNullCondition
   = category:ValidName ws isnull:IsNull
@@ -54,14 +47,6 @@ IsNullCondition
                     isnull: isnull
                 };
             }
-
-ConditionNotNull
-  = "(" _ expr:Expression _ ")"
-  		{
-        	return {expressions:expr};
-        }
-  / NotNullCondition
-
 
 NotNullCondition
   = category:ValidName ws notnull:NotNull
@@ -100,7 +85,7 @@ _ "whitespace"
   = [ \t\n\r]*
 
 IsNull "isnull"
-  = ws "is_null"i
+  = "is_null"i
 
 NotNull "notnull"
-  = ws "is_not_null"i
+  = "is_not_null"i

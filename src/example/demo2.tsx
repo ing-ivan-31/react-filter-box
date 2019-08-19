@@ -14,7 +14,16 @@ class CustomAutoComplete extends GridDataAutoCompleteHandler {
     // override this method to add new your operator
     needOperators(parsedCategory: string) {
         var result = super.needOperators(parsedCategory);
-        return result.concat(["startsWith"]);
+        return result.concat(["is"]);
+    }
+
+    //override to custom to indicate you want to show your custom date time
+    needValues(parsedCategory: string, parsedOperator: string): any[] {
+        if (parsedOperator == "is") {
+            return ['null', 'not-null']
+        }
+
+        return super.needValues(parsedCategory, parsedOperator);
     }
 }
 
@@ -23,12 +32,13 @@ class CustomResultProcessing extends SimpleResultProcessing {
     // override this method to add your handler for startsWith operator
     filter(row:any, fieldOrLabel:string, operator:string, value:string){
         var field = this.tryToGetFieldCategory(fieldOrLabel);
+        console.log(fieldOrLabel, operator, value);
         switch(operator){
             case "==": return row[field] == value;
             case "!=": return row[field] != value;
             case "contains": return row[field].toLowerCase().indexOf(value.toLowerCase()) >=0;
             case "!contains": return row[field].toLowerCase().indexOf(value.toLowerCase()) <0;
-            case "startsWith": return  _.startsWith(row[field].toLowerCase(), value.toLowerCase() ) ;
+            case "is": return value == 'null' ? (row[field] === null) : (row[field] !== null);
         }
         
         return false;

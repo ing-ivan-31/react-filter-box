@@ -28,7 +28,7 @@ export default class ReactFilterBox extends React.Component<any, any> {
         super(props);
 
         var autoCompleteHandler = this.props.autoCompleteHandler ||
-            new GridDataAutoCompleteHandler(this.props.data, this.props.options)
+            new GridDataAutoCompleteHandler(this.props.data, this.props.options);
 
         this.parser.setAutoCompleteHandler(autoCompleteHandler);
 

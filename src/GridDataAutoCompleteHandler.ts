@@ -17,6 +17,7 @@ export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler
             if (f.columnText) return f.columnText;
             return f.columnField
         });
+        console.log(this.categories);
     }
 
     needCategories() {
@@ -24,18 +25,22 @@ export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler
     }
 
     needOperators(parsedCategory: string) {
+        console.log("needOperators", parsedCategory);
+
         // parsedCategory = this.tryToGetFieldCategory(parsedCategory);
         var found = _.find(this.options, f => {
             return f.customOperatorFunc != null && (
                 f.columnText == parsedCategory || f.columnField == parsedCategory
             )
-        })
+        });
+
+        console.log("needOperators-2", found);
 
         if (found) {
             return found.customOperatorFunc(parsedCategory);
         }
 
-        return ["==", "!=", "contains", "!contains"];
+        return ["==", "!=", "contains", "!contains", ">",  ">=", "<", "<=", "is_null", "is_not_null", ":in", ];
     }
 
     needValues(parsedCategory: string, parsedOperator: string): any[] {

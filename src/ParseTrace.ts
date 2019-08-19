@@ -30,10 +30,12 @@ export default class ParseTrace {
     }
 
     pushOperator(operator: string) {
+        console.log("pushOperator", operator)
         this.push({ type: "operator", value: operator })
     }
 
     pushCategory(category: string) {
+        console.log("pushCategory", category)
         this.push({ type: "category", value: category })
     }
 

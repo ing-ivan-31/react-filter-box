@@ -1,7 +1,7 @@
 {
-  "name": "react-filter-box",
-  "version": "3.2.0",
-  "description": "Conditional filter supports OR/AND, bracket, Highlighting, Autocomplete, and high extensibility   ",
+  "name": "react-query-builder",
+  "version": "1.0.0",
+  "description": "Conditional filter supports OR/AND, bracket, Highlighting, Autocomplete, and high extensibility",
   "scripts": {
     "start": "node server.js",
     "lint": "tslint ./src/**/*.tsx?",

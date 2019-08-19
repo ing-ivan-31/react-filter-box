@@ -30,7 +30,7 @@ Condition
   / (IsNullCondition / NotNullCondition / ThreeFactorCondition)
 
 ThreeFactorCondition
-  = category:ValidName ws operator:Operator ws value:ValidValue?
+  = category:ValidName ws operator:Operator ws value:ValidValue
   			{
             	return {
                 	category : category,

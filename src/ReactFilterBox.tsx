@@ -9,6 +9,7 @@ import FilterQueryParser from "./FilterQueryParser";
 import BaseResultProcessing from "./BaseResultProcessing";
 import BaseAutoCompleteHandler from "./BaseAutoCompleteHandler";
 import ParsedError from "./ParsedError";
+import SqlMissingOperators from './SqlMissingOperators';
 
 export default class ReactFilterBox extends React.Component<any, any> {
 
@@ -100,5 +101,6 @@ export {
     GridDataAutoCompleteHandler,
     BaseAutoCompleteHandler,
     Option as AutoCompleteOption,
-    Expression
+    Expression,
+    SqlMissingOperators
 };

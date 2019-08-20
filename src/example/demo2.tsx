@@ -1,13 +1,7 @@
 import * as React from 'react';
-import * as _ from "lodash";
-
-import {Table, Column, Cell} from 'fixed-data-table';
 import "fixed-data-table/dist/fixed-data-table.min.css";
 import data from "./data";
-import SqlMissingOperators from '../SqlMissingOperators';
-
-import ReactFilterBox, {AutoCompleteOption, SimpleResultProcessing, Expression} from "../ReactFilterBox";
-
+import ReactFilterBox, {AutoCompleteOption, SqlMissingOperators, Expression} from "../ReactFilterBox";
 
 export default class Demo2 extends React.Component<any, any> {
 

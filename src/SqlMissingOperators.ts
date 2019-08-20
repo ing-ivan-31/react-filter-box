@@ -1,7 +1,7 @@
-import ReactFilterBox, {GridDataAutoCompleteHandler} from "./ReactFilterBox";
+import {GridDataAutoCompleteHandler} from "./ReactFilterBox";
 
 //extend this class to add your custom operator
-class SqlMissingOperators extends GridDataAutoCompleteHandler {
+export default class SqlMissingOperators extends GridDataAutoCompleteHandler {
 
     // override this method to add new your operator
     needOperators(parsedCategory: string) {
@@ -22,5 +22,3 @@ class SqlMissingOperators extends GridDataAutoCompleteHandler {
         return super.needValues(parsedCategory, parsedOperator);
     }
 }
-
-export default SqlMissingOperators;

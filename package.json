@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "lint": "tslint ./src/**/*.tsx?",
-    "test": "node --max-old-space-size=16000 ./node_modules/.bin/mocha-webpack --require ignore-styles -r jsdom-global/register --webpack-config webpack.test.config.js --watch \"./test/**/*.ts\"",
+    "test": "echo \"No test specified\"",
     "dist": "webpack --config webpack.prod.config.js --progress -p",
     "component-package": "webpack --config webpack.component.config.js --progress -p && npm run less",
     "less": "lessc ./src/ReactFilterBox.less ./lib/react-filter-box.css",

@@ -21,7 +21,7 @@ class CustomAutoComplete extends GridDataAutoCompleteHandler {
     //override to custom to indicate you want to show your custom date time
     needValues(parsedCategory, parsedOperator){
         if(parsedOperator == "after"){
-            return [{ customType:"date"}]
+            return [{ customType:"date"}];
         }
 
         return super.needValues(parsedCategory, parsedOperator);
@@ -40,9 +40,9 @@ class CustomResultProcessing extends SimpleResultProcessing {
             case "!contains": return row[field].toLowerCase().indexOf(value.toLowerCase()) <0;
             case "startsWith": return  _.startsWith(row[field].toLowerCase(), value.toLowerCase() ) ;
             case "after": return  true;
-            
+
         }
-        
+
         return false;
     }
 }
@@ -77,7 +77,7 @@ export default class Demo3 extends React.Component {
         ];
 
         this.customAutoComplete = new CustomAutoComplete(data,this.options);
-        
+
     }
 
     //customer your rendering item in auto complete
@@ -87,9 +87,9 @@ export default class Demo3 extends React.Component {
             return  <div className="day-picker-selection"  >
                 <DayPicker onDayClick={ (day) => pick(day.toLocaleDateString())  }/> </div>
         }
-        
+
         var className = ` hint-value cm-${data.type}`
-        
+
         return <div className={className}  >
                     <span style={{ fontWeight: "bold" }}>{data.value}</span>
                     <span style={{color:"gray", fontSize:10}}> [{data.type}] </span>
@@ -117,7 +117,7 @@ export default class Demo3 extends React.Component {
                 options={this.options}
                 onParseOk={this.onParseOk.bind(this) }
                 />
-            
+
         </div>
     }
 }

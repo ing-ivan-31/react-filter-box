@@ -4,61 +4,20 @@ import * as _ from "lodash";
 import {Table, Column, Cell} from 'fixed-data-table';
 import "fixed-data-table/dist/fixed-data-table.min.css";
 import data from "./data";
+import SqlMissingOperators from '../SqlMissingOperators';
 
-import ReactFilterBox, {AutoCompleteOption, SimpleResultProcessing, Expression, GridDataAutoCompleteHandler} from "../ReactFilterBox";
-
-
-//extend this class to add your custom operator
-class CustomAutoComplete extends GridDataAutoCompleteHandler {
-
-    // override this method to add new your operator
-    needOperators(parsedCategory: string) {
-        var result = super.needOperators(parsedCategory);
-        return result.concat(['is', ':in', '~']);
-    }
-
-    //override to custom to indicate you want to show your custom date time
-    needValues(parsedCategory: string, parsedOperator: string): any[] {
-        if (parsedOperator == "is") {
-            return ['null', 'not-null']
-        }
-
-        if (parsedOperator === ':in'){
-            return ['[val1,val2]']
-        }
-
-        return super.needValues(parsedCategory, parsedOperator);
-    }
-}
-
-class CustomResultProcessing extends SimpleResultProcessing {
-
-    // override this method to add your handler for startsWith operator
-    filter(row:any, fieldOrLabel:string, operator:string, value:string){
-        var field = this.tryToGetFieldCategory(fieldOrLabel);
-        console.log(fieldOrLabel, operator, value);
-        switch(operator){
-            case "==": return row[field] == value;
-            case "!=": return row[field] != value;
-            case "contains": return row[field].toLowerCase().indexOf(value.toLowerCase()) >=0;
-            case "!contains": return row[field].toLowerCase().indexOf(value.toLowerCase()) <0;
-            case "is": return value == 'null' ? (row[field] === null) : (row[field] !== null);
-        }
-
-        return false;
-    }
-}
+import ReactFilterBox, {AutoCompleteOption, SimpleResultProcessing, Expression} from "../ReactFilterBox";
 
 
 export default class Demo2 extends React.Component<any, any> {
 
     options: AutoCompleteOption[];
-    customAutoComplete:CustomAutoComplete;
+    SqlMissingOperators:SqlMissingOperators;
     constructor(props: any) {
         super(props);
         this.state = {
             data: data
-        }
+        };
 
         this.options = [
             {
@@ -80,7 +39,7 @@ export default class Demo2 extends React.Component<any, any> {
             }
         ];
 
-        this.customAutoComplete = new CustomAutoComplete(data,this.options);
+        this.SqlMissingOperators = new SqlMissingOperators([], this.options);
 
     }
 
@@ -105,7 +64,7 @@ export default class Demo2 extends React.Component<any, any> {
             <h3>Custom Rendering (AutoComplete, Operator) <a style={{fontSize:12, color:"#2196F3"}} href="https://github.com/nhabuiduc/react-filter-box/blob/master/js-example/src/demo2.js">Source</a></h3>
 
             <ReactFilterBox
-                autoCompleteHandler = {this.customAutoComplete}
+                autoCompleteHandler = {this.SqlMissingOperators}
                 customRenderCompletionItem = {this.customRenderCompletionItem.bind(this) }
                 query={this.state.query}
                 data={data}

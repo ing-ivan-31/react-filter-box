@@ -14,13 +14,17 @@ class CustomAutoComplete extends GridDataAutoCompleteHandler {
     // override this method to add new your operator
     needOperators(parsedCategory: string) {
         var result = super.needOperators(parsedCategory);
-        return result.concat(["is"]);
+        return result.concat(['is', ':in', '~']);
     }
 
     //override to custom to indicate you want to show your custom date time
     needValues(parsedCategory: string, parsedOperator: string): any[] {
         if (parsedOperator == "is") {
             return ['null', 'not-null']
+        }
+
+        if (parsedOperator === ':in'){
+            return ['[val1,val2]']
         }
 
         return super.needValues(parsedCategory, parsedOperator);
@@ -40,7 +44,7 @@ class CustomResultProcessing extends SimpleResultProcessing {
             case "!contains": return row[field].toLowerCase().indexOf(value.toLowerCase()) <0;
             case "is": return value == 'null' ? (row[field] === null) : (row[field] !== null);
         }
-        
+
         return false;
     }
 }
@@ -77,13 +81,13 @@ export default class Demo2 extends React.Component<any, any> {
         ];
 
         this.customAutoComplete = new CustomAutoComplete(data,this.options);
-        
+
     }
 
     //customer your rendering item in auto complete
     customRenderCompletionItem(self: any, data: any, pick: any) {
         var className = ` hint-value cm-${data.type}`
-        
+
         return <div className={className}  >
                     <span style={{ fontWeight: "bold" }}>{data.value}</span>
                     <span style={{color:"gray", fontSize:10}}> [{data.type}] </span>
@@ -92,9 +96,7 @@ export default class Demo2 extends React.Component<any, any> {
 
     onParseOk(expressions: Expression[]) {
 
-        var newData = new CustomResultProcessing(this.options).process(data, expressions);
-        this.setState({ data: newData });
-        // console.log(newData);
+        console.log("onParseOk2", expressions);
     }
 
     render() {
@@ -110,7 +112,7 @@ export default class Demo2 extends React.Component<any, any> {
                 options={this.options}
                 onParseOk={this.onParseOk.bind(this) }
                 />
-           
+
         </div>
     }
 }

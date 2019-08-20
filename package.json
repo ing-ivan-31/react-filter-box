@@ -1,5 +1,5 @@
 {
-  "name": "react-query-builder",
+  "name": "react-query-box",
   "version": "1.0.0",
   "description": "Conditional filter supports OR/AND, bracket, Highlighting, Autocomplete, and high extensibility",
   "scripts": {
@@ -28,7 +28,7 @@
     "edit",
     "webpack"
   ],
-  "author": "nha bui duc <hugodichoi@gmail.com> (http://github.com/nhabuiduc)",
+  "author": "ingivan31 <ing.ivan.sanchez.31@gmail.com> (http://github.com/nhabuiduc)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nhabuiduc/react-filter-box"

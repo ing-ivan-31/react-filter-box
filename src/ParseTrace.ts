@@ -16,7 +16,6 @@ export default class ParseTrace {
     }
 
     getLastOperator() {
-        // console.log("last");
         return _.findLast(this.arr, f => f.type == "operator").value;
     }
 
@@ -30,12 +29,10 @@ export default class ParseTrace {
     }
 
     pushOperator(operator: string) {
-        console.log("pushOperator", operator)
         this.push({ type: "operator", value: operator })
     }
 
     pushCategory(category: string) {
-        console.log("pushCategory", category)
         this.push({ type: "category", value: category })
     }
 

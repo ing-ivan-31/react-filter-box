@@ -41,7 +41,7 @@ export default class Demo1 extends React.Component<any, any> {
 
         var newData = new SimpleResultProcessing(this.options).process(data, expressions);
         this.setState({ data: newData });
-        console.log("onParseOk",newData);
+        console.log("onParseOk", expressions);
     }
 
     render() {

@@ -27,33 +27,15 @@ Condition
   		{
         	return {expressions:expr};
         }
-  / (IsNullCondition / NotNullCondition / ThreeFactorCondition)
+  / ThreeFactorCondition
 
 ThreeFactorCondition
   = category:ValidName ws operator:Operator ws value:ValidValue
   			{
             	return {
-                	category : category,
+                	category: category,
                     operator: operator,
                     value: value
-                };
-            }
-
-IsNullCondition
-  = category:ValidName ws isnull:IsNull
-  			{
-            	return {
-                	category : category,
-                    isnull: isnull
-                };
-            }
-
-NotNullCondition
-  = category:ValidName ws notnull:NotNull
-  			{
-            	return {
-                	category : category,
-                    notnull: notnull
                 };
             }
 
@@ -68,6 +50,7 @@ ValidValue "value"
         parseTrace.pushValue(value);
         return value;
       }
+
 ValidName  "category"
   = ValidToken+ { parseTrace.pushCategory(text() ); return text(); }
   /"\"" name:[^\"]* "\"" {
@@ -85,7 +68,7 @@ _ "whitespace"
   = [ \t\n\r]*
 
 IsNull "isnull"
-  = "is_null"i
+  = "=null"i
 
 NotNull "notnull"
-  = "is_not_null"i
+  = "!=null"i

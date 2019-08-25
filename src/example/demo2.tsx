@@ -23,7 +23,8 @@ export default class Demo2 extends React.Component<any, any> {
                 type: "text"
             },
             {
-                columnField: "Status",
+                columnText: "Status FIELD",
+                columnField: "Status field",
                 type: "selection"
             },
             {

@@ -1,9 +1,8 @@
 import * as React from 'react';
-import * as _ from "lodash";
 import FilterInput from "./FilterInput";
 import SimpleResultProcessing from "./SimpleResultProcessing";
 
-import GridDataAutoCompleteHandler, { Option } from "./GridDataAutoCompleteHandler";
+import GridDataAutoCompleteHandler, {Option} from "./GridDataAutoCompleteHandler";
 import Expression from "./Expression";
 import FilterQueryParser from "./FilterQueryParser";
 import BaseResultProcessing from "./BaseResultProcessing";
@@ -50,7 +49,23 @@ export default class ReactFilterBox extends React.Component<any, any> {
             return this.props.onParseError(result);
         }
 
-        return this.props.onParseOk(result);
+        let newResult = this.getFields(result);
+        return this.props.onParseOk(newResult);
+    }
+
+    getFields(result: any) {
+        // @ts-ignore
+        result.forEach( (item, index) => this.props.options.forEach( (data) => {
+             if ( item.category === data.columnText ) {
+                 result[index] = {
+                     ...item,
+                     ['field']: data.columnField
+                 };
+             }
+            })
+        );
+
+        return result;
     }
 
     onChange(query: string) {

@@ -15,11 +15,13 @@ export default class Demo2 extends React.Component<any, any> {
 
         this.options = [
             {
-                columnField: "Name",
+                columnText: "Name",
+                columnField: "Name Field",
                 type: "text"
             },
             {
-                columnField: "Description",
+                columnText: "Description",
+                columnField: "Description field",
                 type: "text"
             },
             {

@@ -55,16 +55,23 @@ export default class ReactFilterBox extends React.Component<any, any> {
 
     getFields(result: any) {
         // @ts-ignore
-        result.forEach( (item, index) => this.props.options.forEach( (data) => {
-             if ( item.category === data.columnText ) {
-                 result[index] = {
-                     ...item,
-                     ['field']: data.columnField
-                 };
-             }
-            })
+        result.forEach( (item, index) => {
+            if (item.hasOwnProperty('expressions')) {
+                result[index].expressions = this.getFields(item.expressions);
+            }
+            else {
+                // @ts-ignore
+                this.props.options.forEach( (data) => {
+                    if ( item.category === data.columnText ) {
+                        result[index] = {
+                            ...item,
+                            ['field']: data.columnField
+                        };
+                    }
+                })
+            }
+        }
         );
-
         return result;
     }
 

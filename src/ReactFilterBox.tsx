@@ -28,7 +28,7 @@ export default class ReactFilterBox extends React.Component<any, any> {
         super(props);
 
         var autoCompleteHandler = this.props.autoCompleteHandler ||
-            new GridDataAutoCompleteHandler(this.props.data, this.props.options);
+            new GridDataAutoCompleteHandler(this.props.data, this.props.options, this.props.operators);
 
         this.parser.setAutoCompleteHandler(autoCompleteHandler);
 
@@ -62,11 +62,24 @@ export default class ReactFilterBox extends React.Component<any, any> {
             else {
                 // @ts-ignore
                 this.props.options.forEach( (data) => {
+                    if (item.operator === "is" && item.value === "null") {
+                        item.operator = '=null';
+                        item.value = '';
+                    }
+
+                    if (item.operator === "is" && item.value === "not-null") {
+                        item.operator = '!=null';
+                        item.value = '';
+                    }
+
                     if ( item.category === data.columnText ) {
                         result[index] = {
                             ...item,
                             ['field']: data.columnField
                         };
+                    }
+                    else {
+                        result[index] = item;
                     }
                 })
             }

@@ -6,7 +6,7 @@ import ReactFilterBox, {AutoCompleteOption, SqlMissingOperators, Expression} fro
 export default class Demo2 extends React.Component<any, any> {
 
     options: AutoCompleteOption[];
-    SqlMissingOperators:SqlMissingOperators;
+    operators: string[];
     constructor(props: any) {
         super(props);
         this.state = {
@@ -25,8 +25,7 @@ export default class Demo2 extends React.Component<any, any> {
                 type: "text"
             },
             {
-                columnText: "Status FIELD",
-                columnField: "Status field",
+                columnField: "Status",
                 type: "selection"
             },
             {
@@ -36,8 +35,7 @@ export default class Demo2 extends React.Component<any, any> {
             }
         ];
 
-        this.SqlMissingOperators = new SqlMissingOperators([], this.options);
-
+        this.operators = ['==', '!=', 'contains', '!contains', '>', '>=', '<', '<=', 'is', ':in', '~'];
     }
 
     //customer your rendering item in auto complete
@@ -61,12 +59,12 @@ export default class Demo2 extends React.Component<any, any> {
             <h3>Custom Rendering (AutoComplete, Operator) <a style={{fontSize:12, color:"#2196F3"}} href="https://github.com/nhabuiduc/react-filter-box/blob/master/js-example/src/demo2.js">Source</a></h3>
 
             <ReactFilterBox
-                autoCompleteHandler = {this.SqlMissingOperators}
                 customRenderCompletionItem = {this.customRenderCompletionItem.bind(this) }
                 query={this.state.query}
                 data={data}
                 options={this.options}
                 onParseOk={this.onParseOk.bind(this) }
+                operators={this.operators}
                 />
 
         </div>

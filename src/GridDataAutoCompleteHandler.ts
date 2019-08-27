@@ -7,8 +7,9 @@ export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler
     parseResult: Expression[];
     categories: string[];
     cache: any = {};
+    operators: any[];
 
-    constructor(protected data: any[], protected options?: Option[]) {
+    constructor(protected data: any[], protected options?: Option[], protected operator?: any[]) {
         super();
 
         this.parseResult = null;
@@ -17,6 +18,8 @@ export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler
             if (f.columnText) return f.columnText;
             return f.columnField
         });
+
+        this.operators = operator;
     }
 
     needCategories() {
@@ -35,11 +38,19 @@ export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler
             return found.customOperatorFunc(parsedCategory);
         }
 
-        return ["==", "!=", "contains", "!contains", ">",  ">=", "<", "<="];
+        return this.operators;
     }
 
     needValues(parsedCategory: string, parsedOperator: string): any[] {
-        // parsedCategory = this.tryToGetFieldCategory(parsedCategory);
+
+        if (parsedOperator == "is") {
+            return ['null', 'not-null']
+        }
+
+        if (parsedOperator === ':in'){
+            return ['[val1,val2]']
+        }
+
         var found = _.find(this.options, f => f.columnField == parsedCategory || f.columnText == parsedCategory);
 
         if (found != null && found.type == "selection" && this.data != null) {

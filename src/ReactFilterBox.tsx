@@ -60,31 +60,28 @@ export default class ReactFilterBox extends React.Component<any, any> {
                 result[index].expressions = this.getFields(item.expressions);
             }
             else {
+                if (item.operator === "is" && item.value === "null") {
+                    item.operator = '=null';
+                    item.value = '';
+                }
+
+                if (item.operator === "is" && item.value === "not-null") {
+                    item.operator = '!=null';
+                    item.value = '';
+                }
+
                 // @ts-ignore
                 this.props.options.forEach( (data) => {
-                    if (item.operator === "is" && item.value === "null") {
-                        item.operator = '=null';
-                        item.value = '';
-                    }
-
-                    if (item.operator === "is" && item.value === "not-null") {
-                        item.operator = '!=null';
-                        item.value = '';
-                    }
-
                     if ( item.category === data.columnText ) {
                         result[index] = {
                             ...item,
                             ['field']: data.columnField
                         };
                     }
-                    else {
-                        result[index] = item;
-                    }
-                })
+                });
             }
-        }
-        );
+        });
+        console.log(result);
         return result;
     }
 

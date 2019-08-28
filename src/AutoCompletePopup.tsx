@@ -107,8 +107,8 @@ export default class AutoCompletePopup {
     }
 
     show() {
-        var cursor = this.doc.getCursor();
-        var text = this.doc.getRange({ line: 0, ch: 0 }, cursor)
+        let cursor = this.doc.getCursor();
+        let text = this.doc.getRange({ line: 0, ch: 0 }, cursor);
         this.hintOptions.hintValues = this.needAutoCompletevalues(text);
 
         this.cm.showHint(this.hintOptions);
@@ -120,18 +120,34 @@ export default class AutoCompletePopup {
         var hintOptions = new HintOptions();
 
         hintOptions.hint = (() => {
-            var { hintValues } = hintOptions;
-            var doc = this.cm.getDoc();
-            var cursor = doc.getCursor();
-            var lastSeparatorPos = this.findLastSeparatorPositionWithEditor();
-            var text = doc.getRange(lastSeparatorPos, cursor);
+            let { hintValues } = hintOptions;
+            let doc = this.cm.getDoc();
+            let cursor = doc.getCursor();
+            let lastSeparatorPos = this.findLastSeparatorPositionWithEditor();
+            let text = doc.getRange(lastSeparatorPos, cursor);
 
-            var values = hintValues;
+            let values = hintValues;
+            const valuesClean = hintValues.map(hint => {
+                return {
+                    ...hint,
+                    ...{ ['value']: (typeof hint.value === "string" && hint.value !== "(" ) ? hint.value.replace(/"/g, '') : hint.value}
+                }
+            });
+
             if (text) {
-                values = _.filter(hintValues, f => {
-                    var value = f.value as string;
-                    return _.isString(f.value) ? _.startsWith(value.toLowerCase(), text.toLowerCase()) : true;
-                })
+                // @ts-ignore
+                values = _.chain(valuesClean)
+                    .filter( f => {
+                        let value = f.value as string;
+                        return _.isString(f.value) ? _.startsWith(value.toLowerCase(), text.toLowerCase()) : true;
+                    })
+                    .map( item => {
+                        return {
+                            ...item,
+                            ...{ ['value']: (typeof item.value === "string" && item.value !== "(" ) ? '"' + item.value + '"' : item.value}
+                        }
+                    })
+                    .value();
             }
 
             return {

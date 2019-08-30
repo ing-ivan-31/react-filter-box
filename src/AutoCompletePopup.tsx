@@ -115,6 +115,10 @@ export default class AutoCompletePopup {
         this.completionShow = true;
     }
 
+    hide() {
+        this.completionShow = false;
+    }
+
 
     private createHintOption() {
         var hintOptions = new HintOptions();

@@ -14,6 +14,7 @@ export default class ReactFilterBox extends React.Component<any, any> {
 
     public static defaultProps: any = {
         onParseOk: () => { },
+        onClear: () => { },
         onParseError: () => { },
         onChange: () => { },
         onDataFiltered: () => { },
@@ -23,6 +24,7 @@ export default class ReactFilterBox extends React.Component<any, any> {
     };
 
     parser = new FilterQueryParser();
+    private FilterInput: any;
 
     constructor(props: any) {
         super(props);
@@ -34,7 +36,8 @@ export default class ReactFilterBox extends React.Component<any, any> {
 
         this.state = {
             isFocus: false,
-            isError: false
+            isError: false,
+            result: []
         }
         //need onParseOk, onParseError, onChange, options, data
     }
@@ -45,6 +48,7 @@ export default class ReactFilterBox extends React.Component<any, any> {
 
     onSubmit(query: string) {
         var result = this.parser.parse(query);
+
         if ((result as ParsedError).isError) {
             return this.props.onParseError(result);
         }
@@ -81,7 +85,6 @@ export default class ReactFilterBox extends React.Component<any, any> {
                 });
             }
         });
-        console.log(result);
         return result;
     }
 
@@ -104,6 +107,10 @@ export default class ReactFilterBox extends React.Component<any, any> {
         this.setState({ isFocus: true });
     }
 
+    onClear() {
+        this.FilterInput.clearInput();
+    }
+
     render() {
         var className = "react-filter-box";
         if (this.state.isFocus) {
@@ -122,7 +129,9 @@ export default class ReactFilterBox extends React.Component<any, any> {
                 value={this.props.query}
                 needAutoCompleteValues={this.needAutoCompleteValues.bind(this)}
                 onSubmit={this.onSubmit.bind(this)}
-                onChange={this.onChange.bind(this)} />
+                onChange={this.onChange.bind(this)}
+                ref={FilterInput => this.FilterInput = FilterInput}
+            />
         </div>
     }
 }

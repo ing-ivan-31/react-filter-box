@@ -99,6 +99,10 @@ export default class FilterInput extends React.Component<any, any> {
         });
     }
 
+    clearInput() {
+        this.codeMirror.setValue('');
+    }
+
     private handleEditorChange(_editor: IInstance, _data: CodeMirror.EditorChange, value: string) {
         this.props.onChange(value);
     }

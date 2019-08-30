@@ -7,10 +7,13 @@ export default class Demo2 extends React.Component<any, any> {
 
     options: AutoCompleteOption[];
     operators: string[];
+    private reactFilterBox: any;
+
     constructor(props: any) {
         super(props);
         this.state = {
-            data: data
+            data: data,
+            query: ''
         };
 
         this.options = [
@@ -49,7 +52,6 @@ export default class Demo2 extends React.Component<any, any> {
     }
 
     onParseOk(expressions: Expression[]) {
-
         console.log("onParseOk2", expressions);
     }
 
@@ -64,20 +66,20 @@ export default class Demo2 extends React.Component<any, any> {
     // @ts-ignore
     getFields = (fields) => {
         const keys = Object.keys(fields);
-        let options = keys.map( (field) => {
+        return keys.map((field) => {
             return {
                 columnText: this.fromSnakeToTitleCase(field),
                 columnField: field,
                 type: 'text'
             };
         });
+    };
 
-        console.log(options);
-        return options;
+    onClear = () => {
+        this.reactFilterBox.onClear();
     };
 
     render() {
-        var rows = this.state.data;
         const defaultFields = [
             {
                 bathroom_num: 7,
@@ -100,8 +102,7 @@ export default class Demo2 extends React.Component<any, any> {
             }
         ];
 
-        let fields =  defaultFields.shift();
-
+        let fields = defaultFields.shift();
 
         return <div className="main-container">
             <h3>Custom Rendering (AutoComplete, Operator) <a style={{fontSize:12, color:"#2196F3"}} href="https://github.com/nhabuiduc/react-filter-box/blob/master/js-example/src/demo2.js">Source</a></h3>
@@ -113,8 +114,9 @@ export default class Demo2 extends React.Component<any, any> {
                 options= {this.getFields(fields)}
                 onParseOk={this.onParseOk.bind(this) }
                 operators={this.operators}
-                />
-
+                ref={ReactFilterBox => this.reactFilterBox = ReactFilterBox}
+            />
+            <button onClick={this.onClear.bind(this)}>clear advanced search</button>
         </div>
     }
 }

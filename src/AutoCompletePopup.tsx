@@ -36,6 +36,7 @@ export default class AutoCompletePopup {
     }
 
     private onPick(cm: ExtendedCodeMirror, self: HintResult, data: Completion) {
+        console.log(data);
         var value = data.value;
         if (this.pick) {
             value = this.pick(cm, self, data);
@@ -53,14 +54,12 @@ export default class AutoCompletePopup {
         var className = ` hint-value cm-${data.type}`;
         var registerAndGetPickFunc = () => {
 
-            //hack with show-hint code mirror https://github.com/codemirror/CodeMirror/blob/master/addon/hint/show-hint.js
+            // hack with show-hint code mirror https://github.com/codemirror/CodeMirror/blob/master/addon/hint/show-hint.js
             // to prevent handling click event
             element.className += " custom";
             setTimeout(() => {
-
                 element.hintId = null
             }, 0);
-
             return this.manualPick.bind(this, self, data);
         }
 

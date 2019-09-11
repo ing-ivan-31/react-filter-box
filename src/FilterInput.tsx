@@ -102,7 +102,7 @@ export default class FilterInput extends React.Component<any, any> {
     clearInput() {
         this.codeMirror.setValue('');
         this.doc.setCursor({line: 0, ch: 0 });
-        this.autoCompletePopup.hide();
+        this.autoCompletePopup.clear();
     }
 
     private handleEditorChange(_editor: IInstance, _data: CodeMirror.EditorChange, value: string) {

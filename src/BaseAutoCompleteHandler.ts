@@ -14,17 +14,18 @@ export default class BaseAutoCompleteHandler {
         return text;
     }
 
-    buildDefaultObjOrGetOriginal(value: string | Object, type: string): HintInfo {
+    buildDefaultObjOrGetOriginal(value: string | Object, type: string, brand?: string): HintInfo {
         if (_.isString(value)) {
             return {
                 value: this.quote(value),
-                type: type
+                type: type,
+                brand: brand
             }
         }
 
         return {
             value: value,
-            type: type
+            type: type,
         }
     }
 
@@ -41,7 +42,8 @@ export default class BaseAutoCompleteHandler {
                 var lastTokenType = trace.getLastTokenType() || "value";
 
                 if (lastTokenType == "value") {
-                    result = _.map(this.needCategories(), f => { return this.buildDefaultObjOrGetOriginal(f, "category") });
+                    // @ts-ignore
+                    result = _.map(this.needCategories(), f => { return this.buildDefaultObjOrGetOriginal(f.label, "category", f.brand) });
                 }
 
                 if (lastTokenType == "category") {

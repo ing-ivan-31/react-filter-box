@@ -79,7 +79,8 @@ export default class ReactFilterBox extends React.Component<any, any> {
                     if ( item.category === data.columnText ) {
                         result[index] = {
                             ...item,
-                            ['field']: data.columnField
+                            ['field']: data.columnField,
+                            ['brand']: data.brand
                         };
                     }
                 });

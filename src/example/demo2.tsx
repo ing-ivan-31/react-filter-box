@@ -43,16 +43,15 @@ export default class Demo2 extends React.Component<any, any> {
 
     //customer your rendering item in auto complete
     customRenderCompletionItem(self: any, data: any, pick: any) {
-        var className = ` hint-value cm-${data.type}`
+        var className = ` hint-value cm-${data.type}`;
 
         return <div className={className}  >
                     <span style={{ fontWeight: "bold" }}>{data.value}</span>
-                    <span style={{color:"gray", fontSize:10}}> [{data.type}] </span>
+                    <span style={{color:"gray", fontSize:10}}> [{data.brand}] </span>
                 </div>
     }
 
     onParseOk(expressions: Expression[]) {
-        console.log("onParseOk2", expressions);
     }
 
     // @ts-ignore
@@ -65,14 +64,37 @@ export default class Demo2 extends React.Component<any, any> {
 
     // @ts-ignore
     getFields = (fields) => {
-        const keys = Object.keys(fields);
-        return keys.map((field) => {
-            return {
-                columnText: this.fromSnakeToTitleCase(field),
-                columnField: field,
-                type: 'text'
-            };
+        let keys = Object.keys(fields);
+
+        let values = Object.keys(fields)
+            .map(function(key) {
+                return fields[key];
+            })
+            .map((field) => {
+               return field;
+            });
+
+        // @ts-ignore
+        let composeKeys = [];
+        values.map((value, index) => {
+            let obj = {};
+            // @ts-ignore
+            for (let property in value) {
+                // @ts-ignore
+                obj = {
+                    // @ts-ignore
+                    columnText: this.fromSnakeToTitleCase(property),
+                    // @ts-ignore
+                    columnField: property,
+                    type: 'text',
+                    brand: keys[index]
+                };
+                composeKeys.push(obj);
+            }
         });
+
+        // @ts-ignore
+       return composeKeys;
     };
 
     onClear = () => {
@@ -80,29 +102,110 @@ export default class Demo2 extends React.Component<any, any> {
     };
 
     render() {
-        const defaultFields = [
-            {
-                bathroom_num: 7,
-                bedroom_num: 10,
-                duplicate_airbnb_flag: "N",
-                first_live_date: 1376667075067,
-                listing_address1: "ave.",
-                listing_city: "marble falls",
-                listing_country: "united states",
-                listing_postal_code: "78654",
-                listing_source_name: "Platform",
-                listing_state: "texas",
-                listing_type_desc: "estate",
-                listing_url: "http",
-                property_contact_company_name: "Escondido",
-                rental_number: "490043",
-                sleep_num: 25,
-                unit_thumbnail_url: "http",
-                unit_uuid: "b96dc12c-7cdf-47af-931d-94e83d84d0c0",
-            }
-        ];
-
-        let fields = defaultFields.shift();
+        const defaultFields = {
+               vrbo: {
+                   bathroom_num: 0,
+                   bedroom_num: 0,
+                   duplicate_airbnb_flag: "string",
+                   first_live_date: 0,
+                   listing_address1: "string",
+                   listing_city: "string",
+                   listing_country: "string",
+                   listing_postal_code: "string",
+                   listing_source_name: "string",
+                   listing_state: "string",
+                   listing_type_desc: "string",
+                   listing_url: "string",
+                   property_contact_company_name: "string",
+                   rental_number: "string",
+                   sleep_num: 0,
+                   unit_thumbnail_url: "string",
+                   unit_uuid: "string",
+               },
+               airbnb: {
+                   listing_title: "string",
+                   property_type: "string",
+                   listing_type: "string",
+                   //"created_date": "string",
+                   //"last_scraped_date": "string",
+                   country: "string",
+                   state: "string",
+                   city: "string",
+                   neighborhood: "string",
+                   metropolitan_statistical_area: "string",
+                   average_daily_rate: 0,
+                   annual_revenue_ltm: 0,
+                   occupancy_rate_ltm: 0,
+                   number_of_bookings_ltm: 0,
+                   number_of_reviews: 0,
+                   bedrooms: 0,
+                   year: 0,
+                   max_guests: 0,
+                   //calendar_last_updated: "string",
+                   response_rate: "string",
+                   //"response_time_min": "string",
+                   //"superhost": "string",
+                   //"cancellation_policy": "string",
+                   security_deposit: 0,
+                   cleaning_fee: 0,
+                   extra_people_fee: 0,
+                   published_nightly_rate: 0,
+                   published_monthly_rate: 0,
+                   published_weekly_rate: 0,
+                   //checkin_time: "string",
+                   //checkout_time": "string",
+                   minimum_stay: 0,
+                   count_reservation_days_ltm: 0,
+                   count_available_days_ltm: 0,
+                   count_blocked_days_ltm: 0,
+                   number_of_photos: 0,
+                   instantbook_enabled: "string",
+                   listing_url: "string",
+                   listing_main_image_url: "string",
+                   listing_images: "string",
+                   //amenity_smoking: false,
+                   //amenity_pets_allowed: false,
+                   //amenity_tv: false,
+                   //amenity_internet: false,
+                   //amenity_cabletv: false,
+                   //"amenity_wireless": false,
+                   //"amenity_aircon": false,
+                   //"amenity_heating": false,
+                   //"amenity_elevator": false,
+                   //"amenity_pool": false,
+                   //"amenity_handicap_access": false,
+                   //"amenity_kitchen": false,
+                   //"amenity_doorman": false,
+                   //"amenity_free_parking": false,
+                   //"amenity_gym": false,
+                   //"amenity_hottub": false,
+                   //"amenity_indoor_fireplace": false,
+                   //"amenity_intercom": false,
+                   //"amenity_breakfast": false,
+                   //"amenity_suitable_for_events": false,
+                   //"amenity_washer": false,
+                   //"amenity_dryer": false,
+                   rating_overall: 0,
+                   rating_communication: 0,
+                   rating_accuracy: 0,
+                   rating_cleanliness: 0,
+                   rating_checkin: 0,
+                   rating_location: 0,
+                   rating_value: 0,
+                   //desc_full: "string",
+                   //desc_space: "string",
+                   //desc_transit: "string",
+                   //desc_neighborhood: "string",
+                   //desc_interaction: "string",
+                   //"desc_rules": "string",
+                   //"desc_notes": "string",
+                   //"desc_access": "string",
+                   //"address": "string",
+                   //source_extract_monthid": "string",
+                   //business_ready: "string",
+                   //abb_exclusivity_from_ha: false
+               }
+        };
 
         return <div className="main-container">
             <h3>Custom Rendering (AutoComplete, Operator) <a style={{fontSize:12, color:"#2196F3"}} href="https://github.com/nhabuiduc/react-filter-box/blob/master/js-example/src/demo2.js">Source</a></h3>
@@ -111,7 +214,7 @@ export default class Demo2 extends React.Component<any, any> {
                 customRenderCompletionItem = {this.customRenderCompletionItem.bind(this) }
                 query={this.state.query}
                 data={data}
-                options= {this.getFields(fields)}
+                options= {this.getFields(defaultFields)}
                 onParseOk={this.onParseOk.bind(this) }
                 operators={this.operators}
                 ref={ReactFilterBox => this.reactFilterBox = ReactFilterBox}

@@ -36,7 +36,6 @@ export default class AutoCompletePopup {
     }
 
     private onPick(cm: ExtendedCodeMirror, self: HintResult, data: Completion) {
-        console.log(data);
         var value = data.value;
         if (this.pick) {
             value = this.pick(cm, self, data);
@@ -88,6 +87,7 @@ export default class AutoCompletePopup {
         return {
             value: info.value,
             type: info.type,
+            brand: info.brand,
             hint: this.onPick.bind(this),
             render: this.renderHintElement.bind(this)
         };

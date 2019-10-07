@@ -5,7 +5,7 @@ import * as _ from "lodash";
 export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler {
 
     parseResult: Expression[];
-    categories: string[];
+    categories: any ={};
     cache: any = {};
     operators: any[];
 
@@ -15,7 +15,12 @@ export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler
         this.parseResult = null;
 
         this.categories = _.map(this.options, f => {
-            if (f.columnText) return f.columnText;
+            if (f.columnText) {
+                return {
+                    label: f.columnText,
+                    brand: f.brand
+                };
+            }
             return f.columnField
         });
 
@@ -72,6 +77,7 @@ export interface Option {
     columnField: string;
     columnText?: string;
     type: string;
+    brand?: string;
     customOperatorFunc?: (category: string) => string[]
     customValuesFunc?: (category: string, operator: string) => string[]
 }

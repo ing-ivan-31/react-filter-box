@@ -103,7 +103,6 @@ export default class Demo3 extends React.Component<any, any> {
     }
 
     render() {
-        console.log(this.state.query);
         return <div className="main-container">
             <h3>Add your react component to AutoComplete! <a style={{ fontSize: 12, color: "#2196F3" }} href="https://github.com/nhabuiduc/react-filter-box/blob/master/js-example/src/demo3.js">Source</a></h3>
 

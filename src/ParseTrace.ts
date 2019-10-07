@@ -8,7 +8,6 @@ export default class ParseTrace {
 
     push(item: TraceItem) {
         this.arr.push(item);
-        // console.log(item);;
     }
 
     clear() {

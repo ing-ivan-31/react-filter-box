@@ -3,7 +3,8 @@
     category?: string;
     operator?: string;
     value?: string;
-    expressions?:Expression[];    
+    brand?: string;
+    expressions?:Expression[];
 }
 
 export default Expression;

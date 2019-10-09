@@ -23,7 +23,6 @@ export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler
             }
             return f.columnField
         });
-
         this.operators = operator;
     }
 

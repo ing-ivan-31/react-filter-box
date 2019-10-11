@@ -67,7 +67,7 @@ export default class FilterInput extends React.Component<any, any> {
         this.doc = ref.editor.getDoc();
         this.autoCompletePopup = new AutoCompletePopup(this.codeMirror, (text) => {
             return this.props.needAutoCompleteValues(this.codeMirror, text);
-        })
+        });
 
         this.autoCompletePopup.customRenderCompletionItem = this.props.customRenderCompletionItem;
         this.autoCompletePopup.pick = this.props.autoCompletePick;
@@ -80,23 +80,27 @@ export default class FilterInput extends React.Component<any, any> {
 
         ref.editor.on("changes", () => {
             this.handlePressingAnyCharacter();
-        })
+        });
 
         ref.editor.on("focus", (cm, e?) => {
             this.handlePressingAnyCharacter();
             this.props.onFocus(e);
-        })
+        });
 
         ref.editor.on("blur", (cm, e?) => {
-            this.onSubmit(this.doc.getValue());
+           //this.onSubmit(this.doc.getValue());
             this.props.onBlur(e)
-        })
+        });
 
         ref.editor.on("keyup", (cm: ExtendedCodeMirror, e?: KeyboardEvent) => {
             if (e.keyCode == 13) {
                 this.onSubmit(this.doc.getValue());
             }
         });
+    }
+
+    handleSubmit() {
+        this.onSubmit(this.doc.getValue());
     }
 
     clearInput() {

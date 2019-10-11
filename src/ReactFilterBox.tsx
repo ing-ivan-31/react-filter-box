@@ -36,7 +36,8 @@ export default class ReactFilterBox extends React.Component<any, any> {
         this.state = {
             isFocus: false,
             isError: false,
-            result: []
+            result: [],
+            brandFilter: ''
         };
         //need onParseOk, onParseError, onChange, options, data
     }
@@ -54,7 +55,7 @@ export default class ReactFilterBox extends React.Component<any, any> {
     }
 
     onSubmit(query: string) {
-        var result = this.parser.parse(query);
+        let result = this.parser.parse(query);
 
         if ((result as ParsedError).isError) {
             return this.props.onParseError(result);
@@ -62,6 +63,10 @@ export default class ReactFilterBox extends React.Component<any, any> {
 
         let newResult = this.getFields(result);
         return this.props.onParseOk(newResult);
+    }
+
+    handleClickSubmit() {
+        this.FilterInput.handleSubmit();
     }
 
     getFields(result: any) {
@@ -97,14 +102,37 @@ export default class ReactFilterBox extends React.Component<any, any> {
     }
 
     onChange(query: string) {
-        var result = this.parser.parse(query);
+        let result = this.parser.parse(query);
+
         if ((result as ParsedError).isError) {
-            this.setState({ isError: true })
+            this.setState({ isError: true });
         } else {
-            this.setState({ isError: false })
+            this.setState({ isError: false });
+            let newResult = this.getFields(result);
+            if (newResult.length > 0 && newResult[0].hasOwnProperty('brand') && newResult[0].brand) {
+                this.setState({brandFilter: newResult[0].brand}, this.filterFieldsByBrand);
+            }
         }
 
         this.props.onChange(query, result);
+    }
+
+    filterFieldsByBrand() {
+        let newOptions =  this.props.options;
+
+        if (this.state.brandFilter) {
+            // @ts-ignore
+            newOptions = newOptions.filter((obj) => {
+                return obj.brand === this.state.brandFilter;
+            });
+        }
+
+        this.updateAutoCompleteHandler(newOptions);
+    }
+
+    updateAutoCompleteHandler(newOptions: Option[]) {
+        let autoCompleteHandler = new GridDataAutoCompleteHandler(this.props.data, newOptions, this.props.operators);
+        this.parser.setAutoCompleteHandler(autoCompleteHandler);
     }
 
     onBlur() {
@@ -116,11 +144,12 @@ export default class ReactFilterBox extends React.Component<any, any> {
     }
 
     onClear() {
+        this.updateAutoCompleteHandler(this.props.options);
         this.FilterInput.clearInput();
     }
 
     render() {
-        var className = "react-filter-box";
+        let className = "react-filter-box";
         if (this.state.isFocus) {
             className += " focus"
         }

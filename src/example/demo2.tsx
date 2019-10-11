@@ -121,32 +121,8 @@ export default class Demo2 extends React.Component<any, any> {
         this.state = {
             data: data,
             query: '',
-            filterBrand: '',
             fields: this.getFields(this.defaultFields),
         };
-
-
-        this.options = [
-            {
-                columnText: "Name",
-                columnField: "Name Field",
-                type: "text"
-            },
-            {
-                columnText: "Description",
-                columnField: "Description field",
-                type: "text"
-            },
-            {
-                columnField: "Status",
-                type: "selection"
-            },
-            {
-                columnText: "Email @",
-                columnField: "Email",
-                type: "text"
-            }
-        ];
 
         this.operators = ['==', '!=', 'contains', '!contains', '>', '>=', '<', '<=', 'is', ':in', '~'];
     }
@@ -162,22 +138,8 @@ export default class Demo2 extends React.Component<any, any> {
     }
 
     onParseOk(expressions: Expression[]) {
-        if (expressions.length > 0 && expressions[0].hasOwnProperty('brand') && expressions[0].brand) {
-            this.setState({filterBrand: expressions[0].brand}, this.filterDefaultFields);
-        }
-    }
+        console.log(expressions);
 
-    filterDefaultFields() {
-        let composeKeys = this.getFields(this.defaultFields);
-
-        if (this.state.filterBrand) {
-            // @ts-ignore
-            composeKeys = composeKeys.filter((obj) => {
-                return obj.brand === this.state.filterBrand
-            });
-        }
-
-        this.setState({fields: composeKeys});
     }
 
     // @ts-ignore
@@ -224,8 +186,11 @@ export default class Demo2 extends React.Component<any, any> {
     };
 
     onClear = () => {
-        this.setState({filterBrand: ''}, this.filterDefaultFields);
         this.reactFilterBox.onClear();
+    };
+
+    handleSubmit = () => {
+        this.reactFilterBox.handleClickSubmit();
     };
 
     render() {
@@ -242,6 +207,7 @@ export default class Demo2 extends React.Component<any, any> {
                 ref={ReactFilterBox => this.reactFilterBox = ReactFilterBox}
             />
             <button onClick={this.onClear.bind(this)}>clear advanced search</button>
+            <button onClick={this.handleSubmit.bind(this)}>Submit</button>
         </div>
     }
 }

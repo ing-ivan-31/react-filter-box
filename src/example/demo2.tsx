@@ -32,6 +32,17 @@ export default class Demo2 extends React.Component<any, any> {
                 sleep_num: 0,
                 unit_thumbnail_url: "string",
                 unit_uuid: "string",
+                instant_booking_enabled_flag: "string",
+                online_booking_enabled_flag: "string",
+                person_type: "string",
+                rent_potential_q50_ha: 0,
+                rent_potential_q80_ha: 0,
+                rent_potential_q85_ha: 0,
+                rent_potential_q90_ha: 0,
+                rent_potential_q50_all_channels: 0,
+                rent_potential_q80_all_channels: 0,
+                rent_potential_q85_all_channels: 0,
+                rent_potential_q90_all_channels: 0
             },
             airbnb: {
                 listing_title: "string",
@@ -114,7 +125,7 @@ export default class Demo2 extends React.Component<any, any> {
                 //"address": "string",
                 //source_extract_monthid": "string",
                 //business_ready: "string",
-                //abb_exclusivity_from_ha: false
+                abb_exclusivity_from_ha: false
             }
         };
 
@@ -137,10 +148,9 @@ export default class Demo2 extends React.Component<any, any> {
                 </div>
     }
 
-    onParseOk(expressions: Expression[]) {
-        console.log(expressions);
-
-    }
+    onParseOk(expressions: Expression[], query: string) {
+        console.log(expressions, query);
+    };
 
     // @ts-ignore
     fromSnakeToTitleCase = (snake) => {

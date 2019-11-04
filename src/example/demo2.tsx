@@ -148,8 +148,8 @@ export default class Demo2 extends React.Component<any, any> {
                 </div>
     }
 
-    onParseOk(expressions: Expression[], query: string) {
-        console.log(expressions, query);
+    onParseOk(expressions: Expression[], query: string, type: string) {
+        console.log(expressions, query, type);
     };
 
     // @ts-ignore

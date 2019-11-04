@@ -62,7 +62,7 @@ export default class ReactFilterBox extends React.Component<any, any> {
         }
 
         let newResult = this.getFields(result);
-        return this.props.onParseOk(query, newResult);
+        return this.props.onParseOk(query, newResult, 'advanced');
     }
 
     handleClickSubmit() {

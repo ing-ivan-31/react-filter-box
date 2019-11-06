@@ -1,6 +1,6 @@
 {
   "name": "react-query-box",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Conditional filter supports OR/AND, bracket, Highlighting, Autocomplete, and high extensibility",
   "scripts": {
     "start": "node server.js",

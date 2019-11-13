@@ -17,11 +17,11 @@ export default class GridDataAutoCompleteHandler extends BaseAutoCompleteHandler
         this.categories = _.map(this.options, f => {
             if (f.columnText) {
                 return {
-                    label: f.columnText,
+                    label: f.brand + '.' + f.columnText,
                     brand: f.brand
                 };
             }
-            return f.columnField
+            return f.columnField;
         });
         this.operators = operator;
     }

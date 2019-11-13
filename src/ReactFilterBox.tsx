@@ -87,10 +87,13 @@ export default class ReactFilterBox extends React.Component<any, any> {
                 }
 
                 // @ts-ignore
+                let splitItem = item.category.split('.');
+                // @ts-ignore
                 this.props.options.forEach( (data) => {
-                    if ( item.category === data.columnText ) {
+                    if ( splitItem[1] === data.columnText && splitItem[0] === data.brand ) {
                         result[index] = {
                             ...item,
+                            ['category']: data.columnText,
                             ['field']: data.columnField,
                             ['brand']: data.brand
                         };

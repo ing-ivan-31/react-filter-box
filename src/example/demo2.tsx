@@ -44,7 +44,7 @@ export default class Demo2 extends React.Component<any, any> {
                 rent_potential_q85_all_channels: 0,
                 rent_potential_q90_all_channels: 0
             },
-            airbnb: {
+            abb: {
                 listing_title: "string",
                 property_type: "string",
                 listing_type: "string",
@@ -126,6 +126,9 @@ export default class Demo2 extends React.Component<any, any> {
                 //source_extract_monthid": "string",
                 //business_ready: "string",
                 abb_exclusivity_from_ha: false
+            },
+            bcom: {
+                bedrooms: 0
             }
         };
 
